@@ -6,11 +6,7 @@
 
 A comprehensive tutorial for executing token swaps on Solana using Jupiter V6, incorporating advanced features like versioned transactions, priority fees, compute budget optimization, Address Lookup Tables (ALTs), and Jito bundles.
 
-
-
 ![Solana Swap Process](./images/solana_swap_process.png)
-
-
 
 ## 📚 Table of Contents
 
@@ -161,16 +157,20 @@ This tutorial implements several Solana development best practices:
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## 📄 License
+## Badges
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/) [![GPLv3 License](https://img.shields.io/badge/License-Flamingo-red.svg)](https://opensource.org/licenses/)
+
+## Authors
+
+- [Flamingo](https://www.github.com/gungho0619)
 
 ## 💖 Support the Developer
 
 If you found this tutorial helpful and would like to support the development of more resources like this, consider tipping! Your contributions help keep the project alive and thriving.
 
-**Solana Wallet Address:** `jaDpUj6FzoQFtA5hCcgDwqnCFqHFcZKDSz71ke9zHZA`
-**ETH Wallet Address:** `0x96aca495621E93c884A8cb054bB823Bc273C29Bb`
+**Solana Wallet Address:** `HZj1tEYHfAR7fkM9jYEGonnQHxwYA5u3dLcngCWJtAS3`
+**ETH Wallet Address:** `0xE182926eeC48833fAF2B7f87993E0C2B80b48FF9`
 
 Thank you for your support!
 
