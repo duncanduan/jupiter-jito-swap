@@ -16,10 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "@solana/spl-token": "^0.4.8",
-    "@solana/web3.js": "^1.95.2",
+    "@solana/web3.js": "^1.98.2",
     "axios": "^1.7.3",
     "bs58": "^5.0.0",
-    "dotenv": "^16.4.5"
+    "cli-table3": "^0.6.5",
+    "dotenv": "^16.4.5",
+    "global-agent": "^3.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.25.3",

@@ -1,8 +1,4 @@
 const {
-  Connection,
-  Keypair,
-} = require("@solana/web3.js");
-const {
   deserializeInstruction,
   getAddressLookupTableAccounts,
   simulateTransaction,
@@ -15,13 +11,49 @@ const {
   sendJitoBundle,
   checkBundleStatus,
 } = require("./jitoService");
-const { SOLANA_RPC_URL, WALLET_PRIVATE_KEY } = require("./config");
+const { SOLANA_RPC_URL } = require("./config");
 const bs58 = require('bs58');
 
+const fetch = require('node-fetch');
+//const { JitoJsonRpcClient } = require('jito-js-rpc');
+const {
+  SystemProgram,
+  TransactionMessage,
+  Connection,
+  Transaction,
+  VersionedTransaction,
+  Keypair,
+  PublicKey,
+} = require('@solana/web3.js');
+const { bootstrap } = require('global-agent');
+const { readFileSync } = require('fs');
+const { homedir } = require('os');
+const { join } = require('path');
+const Table = require('cli-table3');
+const chalk = require('chalk');
+
+
+process.env.GLOBAL_AGENT_HTTP_PROXY = 'http://172.19.32.1:7078';
+bootstrap();
+
+
 const connection = new Connection(SOLANA_RPC_URL);
-const wallet = Keypair.fromSecretKey(
-  new Uint8Array(JSON.parse(WALLET_PRIVATE_KEY))
-);
+
+
+const getPrivateKey = () => {
+  try {
+      const privateKeyPath = join(homedir(), '.config', 'solana', 'id.json');
+      const privateKeyBuffer = readFileSync(privateKeyPath);
+      const privateKeyArray = JSON.parse(privateKeyBuffer.toString());
+      return Uint8Array.from(privateKeyArray);
+  } catch (error) {
+      console.error('Failed to load private key:', error);
+      throw new Error('Private key not found or invalid');
+  }
+};
+
+const wallet = Keypair.fromSecretKey(getPrivateKey());
+
 
 async function swap(
   inputMint,
@@ -207,7 +239,7 @@ async function main() {
     const inputMint = "So11111111111111111111111111111111111111112"; // Wrapped SOL
     const outputMint = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"; // USDC
     const amount = 0.01; // 0.01 SOL
-    const initialSlippageBps = 100; // 1% initial slippage
+    const initialSlippageBps = 30; // 1% initial slippage
     const maxRetries = 5;
 
     console.log("\n🚀 Starting swap operation...");
