@@ -18,6 +18,15 @@ async function getSwapInstructions(quoteResponse, userPublicKey) {
     quoteResponse,
     userPublicKey,
     wrapUnwrapSOL: true,
+    dynamicComputeUnitLimit: true,
+    dynamicSlippage: true,
+    prioritizationFeeLamports: {
+        priorityLevelWithMaxLamports: {
+          maxLamports: 50000,
+          global: true,
+          priorityLevel: "veryHigh"
+        }
+    }
   });
   return response.data;
 }

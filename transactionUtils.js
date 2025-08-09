@@ -7,8 +7,12 @@ const {
 } = require("@solana/web3.js");
 const { SOLANA_RPC_URL } = require("./config");
 const { Connection } = require("@solana/web3.js");
+const { bootstrap } = require('global-agent');
 
 const connection = new Connection(SOLANA_RPC_URL);
+
+process.env.GLOBAL_AGENT_HTTP_PROXY = 'http://172.19.32.1:7078';
+bootstrap();
 
 function deserializeInstruction(instruction) {
   return {
@@ -25,16 +29,21 @@ function deserializeInstruction(instruction) {
 async function getAddressLookupTableAccounts(keys) {
   const addressLookupTableAccounts = await Promise.all(
     keys.map(async (key) => {
-      const accountInfo = await connection.getAccountInfo(new PublicKey(key));
-      return {
-        key: new PublicKey(key),
-        state: accountInfo
-          ? AddressLookupTableAccount.deserialize(accountInfo.data)
-          : null,
-      };
+      try {
+        const accountInfo = await connection.getAccountInfo(new PublicKey(key));
+        return accountInfo
+          ? {
+              key: new PublicKey(key),
+              state: AddressLookupTableAccount.deserialize(accountInfo.data),
+            }
+          : null;
+      } catch (err) {
+        console.warn(`⚠️ Failed to fetch ALT account ${key}: ${err.message}`);
+        return null;
+      }
     })
   );
-  return addressLookupTableAccounts.filter((account) => account.state !== null);
+  return addressLookupTableAccounts.filter((account) => account && account.state !== null);
 }
 
 async function simulateTransaction(
